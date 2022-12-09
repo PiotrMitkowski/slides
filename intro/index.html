@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css2?family=Montserrat&display=swap);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Montserrat', sans-serif; }
+
+      h1, h2, h3 {color: #1A237E; }
+
+      a {
+        text-decoration: none;
+      }
+
+      li { line-height: 1.5em; }
+
+      .inverse {
+        background: #1A237E;
+        color: white;
+        text-shadow: 0 0 20px #777;
+      }
+      
+      .inverse > h1 { color: white; }
+
+      .remark-code, .remark-inline-code {
+         font-family: 'Ubuntu Mono';
+         font-size: 0.9em;
+         line-height: 1.4em;
+      }
+
+
+      .left-column {
+        float: left;
+        width: 49%;
+      }
+
+      .right-column {
+        float: right;
+        width: 49%;
+      }
+
+      .bio-image > img {
+        width: 75%;
+        border-radius: 50%;
+      }
+
+      .social-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .social-container-column {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      .social-link-tile {
+        margin-bottom: 5em;
+      }
+
+      .social-link-tile a{
+        font-size: 0.8em;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# Hello 👋! 
+
+---
+
+# Who am I?
+
+.left-column[
+  .bio-image[![](assets/bio.jpeg)]
+]
+
+.right-column[
+- Senior Flutter Developer
+- Open Source contributor
+- Software architecture lover
+- Legacy code enthusiast
+- Football fan ⚽️
+]
+
+---
+
+# Who am I?
+
+### What I do?
+
+- 📱 Mobile apps development since 2015
+- 🐥 Focused on Flutter
+- 👨‍💻 Some projects in Titanium.js (don't try this at home), native iOS (Swift)
+- 🛠 Making Legacy great again
+- 💸 Bootstraping [Dobry Rodzic](https://dobryrodzic.com.pl)
+
+### What I like?
+
+- ⚽️ Football (rather playing than watching); Southampton FTW
+- 🐺 Computer games
+- 💾 Modern history 
+
+---
+
+# Showtime!
+
+Let's solve the first part of Advent of Code 2022 Day 1 task
+```dart
+Future<String> solveDayOne(String fileName) async {
+  final input = await getFileInput('lib/day1/$fileName.txt');
+  final elvesCalories = input.split('\n\n');
+  final sums = elvesCalories.map((e) {
+    final caloriesEntries = e.split('\n').map((e) => int.parse(e));
+    final caloriesSum =
+        caloriesEntries.reduce((value, element) => value + element);
+    return caloriesSum;
+  }).toList();
+  sums.sort();
+  return sums.last.toString();
+}
+```
+
+---
+
+# Showtime!
+
+How about a little E2E test with [Patrol](https://patrol.leancode.co)?
+```dart
+void main() async {
+  patrolTest(
+    'Should correctly open the app',
+    nativeAutomation: true,
+    (PatrolTester $) async {
+      final appInitTask = app.main();
+      await $.pumpAndSettle(duration: const Duration(seconds: 3));
+      await $.native.selectFineLocation();
+      await $.native.grantPermissionWhenInUse();
+      await appInitTask;
+      await $.pump(const Duration(seconds: 3));
+      await $.pumpAndSettle(duration: const Duration(seconds: 3));
+      expect($(LandingScreen), findsOneWidget);
+    },
+  );
+}
+```
+---
+
+# See you around!
+
+.social-container[
+  .social-container-column[
+  .social-link-tile[
+  #### Twitter
+  [@piotrmitkowski](https://twitter.com/piotrmitkowski)
+  ]
+  .social-link-tile[
+  #### Github
+  [/PiotrMitkowski](https://github.com/PiotrMitkowski)
+  ]
+  ]
+  .social-container-column[
+  .social-link-tile[
+  #### LinkedIn
+  [in/piotr-mitkowski](https:/linkedin.com/in/piotr-mitkowski)
+  ]
+  .social-link-tile[
+  #### WWW
+  [mitkowski.dev](https://mitkowski.dev)
+  ]
+  ]
+]
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

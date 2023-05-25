@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css2?family=Montserrat&display=swap);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Montserrat', sans-serif; }
+
+      h1, h2, h3 {color: #1A237E; }
+
+      a {
+        text-decoration: none;
+      }
+
+      li { line-height: 1.5em; }
+
+      .inverse {
+        background: #1A237E;
+        color: white;
+        text-shadow: 0 0 20px #777;
+      }
+      
+      .inverse > h1 { color: white; }
+
+      .remark-code, .remark-inline-code {
+         font-family: 'Ubuntu Mono';
+         font-size: 0.9em;
+         line-height: 1.4em;
+      }
+
+
+      .left-column {
+        float: left;
+        width: 49%;
+      }
+
+      .right-column {
+        float: right;
+        width: 49%;
+      }
+
+      .bio-image > img {
+        width: 75%;
+        border-radius: 50%;
+      }
+
+      .center-image, .center-image > img {
+        margin: 0 auto;
+        height: 50vh;
+      }
+
+      .social-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .social-container-column {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      .social-link-tile {
+        margin-bottom: 5em;
+      }
+
+      .social-link-tile a{
+        font-size: 0.8em;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# Riverpod for bloc users 
+
+---
+
+# Agenda
+
+
+.left-column[
+- Context
+- Facts
+- Bloc vs. Riverpod - overview
+- Bloc vs. Riverpod - Flutter template
+]
+
+---
+
+# Context
+
+The best state management solution in Flutter:
+
+--
+
+.center-image[![](assets/cats-fighting.gif)]
+
+---
+
+# Facts
+
+.center-image[![](assets/bears-beats.gif)]
+
+---
+
+# Facts
+.left-column[
+### bloc
+  - created by F. Angelov
+]
+.right-column[
+### riverpod
+  - created by R. Rousslet
+]
+
+---
+
+# See you around!
+
+.social-container[
+  .social-container-column[
+  .social-link-tile[
+  #### Twitter
+  [@piotrmitkowski](https://twitter.com/piotrmitkowski)
+  ]
+  .social-link-tile[
+  #### Github
+  [/PiotrMitkowski](https://github.com/PiotrMitkowski)
+  ]
+  ]
+  .social-container-column[
+  .social-link-tile[
+  #### LinkedIn
+  [in/piotr-mitkowski](https:/linkedin.com/in/piotr-mitkowski)
+  ]
+  .social-link-tile[
+  #### WWW
+  [mitkowski.dev](https://mitkowski.dev)
+  ]
+  ]
+]
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

@@ -422,7 +422,7 @@ class TasksCubit extends Cubit<TasksState> {
   }
 }
 
-final tasksNotifierProvider = StateNotifierProvider<TasksNotifier, TasksState>(
+*final tasksNotifierProvider = StateNotifierProvider<TasksNotifier, TasksState>(
   (ref) {
     final tasksRepository = ref.read(tasksRepositoryProvider);
     return TasksNotifier(tasksRepository);
@@ -434,35 +434,8 @@ final tasksNotifierProvider = StateNotifierProvider<TasksNotifier, TasksState>(
 - przypisanie do `state` zamiast `emit()`
 - inny provider (inaczej zmiany nie będą śledzone przez `watch()`)
 - inicjalizacja w konstruktorze, nigdy w widgecie (jak w przypadku bloca)
-
----
-
-## bloc - UI
-
-```dart
-*class TasksPage extends StatelessWidget {
-  ...
-
-  @override
-* Widget build(BuildContext context) {
-*   return BlocProvider(
-*     create: (_) => serviceLocator.get<TasksCubit>()..loadTasks(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(_arguments.title),
-        ),
-*       body: BlocBuilder<TasksCubit, TasksState>(
-*         builder: (context, state) {
-            return state.map(
-              ...
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-```
+- mozna to obejsc poprzez wywolanie `init` ref.listen, albo `postFrameCallback`,
+ale jest to malo przyjemne
 
 ---
 
@@ -581,8 +554,6 @@ test('should emit ShowTasks after successful load', () async {
 - nie mamy oczywiscie odpowiednika `bloc_test` :D
 - jedyna roznica wynika z tego, ze riverpod odpala metodę `init` w konstruktorze,
 wiec testowanie tego jest troche toporne
-- mozna to obejsc poprzez wywolanie `init` ref.listen, albo `postFrameCallback`,
-ale jest to malo przyjemne
 
 ---
 
@@ -745,6 +716,31 @@ Widget build(BuildContext context, WidgetRef ref) {
 ---
 
 ## Provider for everything
+
+
+```dart
+class FakeProductsRepository {
+  List<Product> getProductsList();
+
+  Stream<List<Product>> watchProductsList();
+
+  Stream<Product?> watchProduct(String id);
+}
+
+final productsRepositoryProvider = Provider<FakeProductsRepository>(
+  (ref) => FakeProductsRepository(),
+);
+
+*final productsListStreamProvider = StreamProvider.autoDispose<List<Product>>((ref) {
+  final productsRepository = ref.watch(productsRepositoryProvider);
+  return productsRepository.watchProductsList();
+});
+
+*final productProvider = StreamProvider.autoDispose.family<Product?, String>((ref, id) {
+  final productsRepository = ref.watch(productsRepositoryProvider);
+  return productsRepository.watchProduct(id);
+});
+```
 
 ???
 

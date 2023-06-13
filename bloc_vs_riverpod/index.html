@@ -89,7 +89,13 @@
 
 class: center, middle, inverse
 
-# Riverpod for bloc users 
+# Riverpod for Bloc users 
+
+???
+- Omówienie Riverpoda
+- nie "przejście przez wszystkie ficzery", a spojrzenie z perspektywy Bloca
+- jak mozemy go wykorzystac
+- zadawanie pytań, najlepiej przez podniesienie "łapki"
 
 ---
 
@@ -100,9 +106,16 @@ class: center, middle, inverse
 - Context
 - Facts
 - Bloc vs. Riverpod - overview
-- Bloc vs. Riverpod - Flutter template
+- Bloc vs. Riverpod - Flutter Template
 - Tidbits!
 ]
+
+???
+1. Tło, kontekst rozmowy o Riverpodzie i State Management ogólnie
+2. Kilka suchych faktów z Bloca i Riverpoda, dla porównania
+3. Spojrzenie na ogólne załozenia obu narzędzi
+4. Przykład implementacji na podstawie Flutter Template
+5. Smaczki z Riverpoda, których nie ma w Blocu
 
 ---
 class: center, middle
@@ -118,7 +131,7 @@ The best state management solution in Flutter:
 ???
 - zaglądanie na Twittera
 - temat state management często się tam pojawia
-- dyskusja nad najlepszym/rekomendowanym narzędziem State Management wygląda tak:
+- rozmowa o najlepszym/rekomendowanym narzędziu State Management wygląda tak:
 
 --
 
@@ -133,11 +146,12 @@ The best state management solution in Flutter:
 Source: [Codemagic blogpost by A. Salvadorini](https://blog.codemagic.io/flutter-state-management-part-1/)
 
 ???
-- Walka toczy się od 2018, kiedy BLoC został omówiony na Google I/O 
-- Potem doszedł Provider, dzieło Remy'ego
+- Walka toczy się od 2018, kiedy wzorzec BLoC został omówiony na Google I/O (Filip Hracek, Matt Sullivan)
+- Potem doszedł Provider, o którym rok później opowiadała ta sama dwójka
 - Wpadło jeszcze kilka innych rozwiązań
-- Warto podejśc do state management, jak do kolejnego narzędzia - wypracowac jeden,
-lub kilka wewnętrznych standardów i stosowac je w zaleznosci od projektów
+- Flutter Team nie daje jednoznacznej rekomendacji - wielu zwolenników i przeciwników takiego podejścia
+- Warto podejśc do state management, jak do kolejnego narzędzia - młotek i gwoździe
+- warto wypracowac jeden,lub kilka wewnętrznych standardów i stosowac je w zaleznosci od projektów
 ---
 
 
@@ -148,7 +162,7 @@ lub kilka wewnętrznych standardów i stosowac je w zaleznosci od projektów
 ???
 - walka jednak trwa i community cały czas dązy do wypracowania standardów
 - wiemy, jak to ze standaryzacją bywa -> komiks
-- riverpod jest efektem dązenia do standardu i stałego ulepszania narzędzi
+- Riverpod jest efektem dązenia do standardu i stałego ulepszania narzędzi
 w zakresie SM
 
 ---
@@ -160,14 +174,13 @@ class: center, middle
 .center-image[![](assets/bears-beats.gif)]
 
 ???
-- Zanim przejdziemy do wykorzystania Riverpoda w praktyce -> kilka suchych faktów
-- 
+- Zanim przyjrzymy się Riverpodowi blizej -> kilka suchych faktów
 
 ---
 
 ## Facts
 .left-column[
-### bloc
+### Bloc
   - created by F. Angelov / VGV
   - Oct 2018
   - BLoC pattern
@@ -175,7 +188,7 @@ class: center, middle
   - 7.8k Pub likes (combined)
 ]
 .right-column[
-### riverpod
+### Riverpod
   - created by R. Rousslet
   - Apr 2020
   - `provider` rewrite
@@ -184,8 +197,8 @@ class: center, middle
 ]
 
 ???
-- bloc istnieje od 2018, powstał jako implementacja wzorca BLoC 
-- riverpod powstał w 2020 roku jako rewrite providera
+- Bloc istnieje od 2018, powstał jako implementacja wzorca BLoC 
+- Riverpod powstał w 2020 roku jako rewrite providera
 - autorów obu narzędzi raczej nie trzeba przedstawiac
 - statystyki popularności z GH i Pub.dev przemawiają za Bloc, co w głównej mierze wynika
 z czasu obecności na rynku - Bloc ma bardziej ugruntowaną pozycję
@@ -197,9 +210,12 @@ class: center, middle
 
 # Overview
 
+???
+- Spojrzenie na załozenia obu narzędzi
+
 ---
 
-## bloc
+## Bloc
 
 .center-image[![](assets/bloc_pattern_diagram.png)]
 
@@ -208,10 +224,14 @@ Source: [Flutteris blog](https://www.flutteris.com/blog/en/reactive-programming-
 ???
 
 - narzucony wzorzec Business Logic Components
+- w centrum aplikacji mamy komponenty logiki biznesowej
+- komponenty nasłuchują zdarzeń, przetwarzają otrzymane zdarzenia, a następnie przekazują wynik przetwarzania
+do ich słuchaczy (Widgety)
+- separation of concerns
 
 ---
 
-## bloc
+## Bloc
 
 .center-image-wide[![](assets/bloc_architecture_full.png)]
 
@@ -229,7 +249,7 @@ Source: [Bloc docs](https://bloclibrary.dev/#/coreconcepts)
 
 ---
 
-## riverpod
+## Riverpod
 
 .center-image[![](assets/riverpod_various_archs.png)]
 
@@ -241,18 +261,18 @@ Source: [Code with Andrea](https://codewithandrea.com/articles/flutter-app-archi
 - w centrum zarządzania stanem są Providery, które odpowiadają za dostarczenie pewnych obiektów/wartości do elementów widget tree
 - Provider może dostarczać praktycznie dowolny obiekt/primitive value (z małymi ograniczeniami); może być używany jako samodzielne DI, bez konieczności dodawania GetIt
 - rekomendowane podejście “cubitowe” - klasa StateNotifier operująca na stanie; zmiana stanu odbywa się przez wywoływanie metod na klasie StateNotifier
-- providery są niezależne od *widget tree* ich kontener jest całkowicie poza drzewem (a dokładniej na samym jego szczycie), a dostęp do jego składowych nie wymaga build contextu
+- istotna informacja - providery są niezależne od *widget tree*; ich kontener jest całkowicie poza drzewem (a dokładniej na samym jego szczycie), a dostęp do jego składowych nie wymaga build contextu
 
 ---
 
-## riverpod
+## Riverpod
 
 .center-image[![](assets/riverpod_providers_table.png)]
 
 Source: [Riverpod docs](https://riverpod.dev/docs/concepts/providers#different-types-of-providers)
 
 ???
-- o ile bloc ma jeden uniwersalny Provider, o tyle w riverpodzie jest kilka róznych typów
+- o ile Bloc ma jeden uniwersalny Provider, o tyle w riverpodzie jest kilka róznych typów
 - nas najbardziej interesują Provider i StateNotifierProvider
 
 ---
@@ -263,9 +283,12 @@ class: center, middle
 
 .center-image[![](assets/talk_is_cheap.jpeg)]
 
+???
+- Wystarczy teorii, pora przejśc do kodu
+
 ---
 
-## App startup - bloc
+## App startup - Bloc
 
 ```dart
 void main() async {
@@ -274,9 +297,12 @@ void main() async {
 }
 ```
 
+???
+- nic nadzwyczajnego
+
 ---
 
-## App startup - riverpod
+## App startup - Riverpod
 
 ```dart
 void main() async {
@@ -285,9 +311,13 @@ void main() async {
 }
 ```
 
+???
+- Opakowanie appki przez `ProviderScope` - klasy odpowiedzialnej za zarządzanie 
+kontenerem Providerów
+
 ---
 
-## DI - bloc
+## DI - Bloc
 ```dart
 void _setupData() {
   serviceLocator
@@ -298,8 +328,8 @@ void _setupData() {
     ..registerLazySingleton(
       () => DioHelper.createDioInstance(serviceLocator(), serviceLocator())
     )
-    ..registerFactory(() => TasksRestClient(serviceLocator()))
-    ..registerFactory(() => TasksRepository(serviceLocator()));
+*   ..registerFactory(() => TasksRestClient(serviceLocator()))
+*   ..registerFactory(() => TasksRepository(serviceLocator()));
 }
 
 void _setupFirebase() {
@@ -310,15 +340,19 @@ void _setupFirebase() {
     );
 }
 
-void _setupCubits() {
-  serviceLocator.registerFactory(() => TasksCubit(serviceLocator()));
-}
-
+*void _setupCubits() {
+* serviceLocator.registerFactory(() => TasksCubit(serviceLocator()));
+*}
 ```
+
+???
+- standardowe DI 
+- wstrzykiwanie wszystkich elementów od najnizszych warstw (zewnętrzne biblioteki, Rest client), przez repozytoria,
+az po jednostki logiki biznesowej, czyli Cubity
 
 ---
 
-## DI - riverpod
+## DI - Riverpod
 ```dart
 void _setupData() {
   serviceLocator
@@ -343,21 +377,23 @@ void _setupFirebase() {
 ```
 
 ???
-- wypadł rest client i interceptor
+- tak naprawdę nie jest to potrzebne - mozna wszystko przerzucic na Riverpoda
+- załozenie - 3rd party przez GetIt, 1st party przez Riverpoda (Providery dla 3rd party wymagają więcej boilerplate'a)
+- wypadł rest client i repository
 - wypadł cubit
 
 ---
 
-## DI - riverpod
+## DI - Riverpod
 
 ```dart
 class TasksRestClient {
   ...
 }
 
-final tasksRestClientProvider = Provider<TasksRestClient>((ref) {
-  return TasksRestClient(serviceLocator());
-});
+*final tasksRestClientProvider = Provider<TasksRestClient>((ref) {
+* return TasksRestClient(serviceLocator());
+*});
 ```
 
 ```dart
@@ -368,41 +404,50 @@ class TasksRepository {
   ...
 }
 
-final tasksRepositoryProvider = Provider<TasksRepository>((ref) {
-  final restClient = ref.read(tasksRestClientProvider);
+*final tasksRepositoryProvider = Provider<TasksRepository>((ref) {
+* final restClient = ref.read(tasksRestClientProvider);
   return TasksRepository(restClient);
 });
 ```
 
 ???
-- Provider - wrzucenie obiektu klasy do kontenera 
+- Provider - wrzucenie instancji do kontenera 
+- providery jako zmienne globalne
+- standardowy Provider - dla singletonów bez śledzenia zmian
 - ref.read - standardowe odczytanie providera
+- ref - odnośnik do kontenera providerów
+- providery są odczytywane poprzez te globalne zmienne, a nie typy (jak w przypadku GetIt)
 
 ---
 
-## Business logic - bloc
+## Business logic - Bloc
 
 ```dart
-class TasksCubit extends Cubit<TasksState> {
+*class TasksCubit extends Cubit<TasksState> {
   TasksCubit(this._repository) : super(const ShowLoading());
 
   final TasksRepository _repository;
 
   Future<void> loadTasks() async {
-    emit(const ShowLoading());
+*   emit(const ShowLoading());
 
     final result = await _repository.getTasks();
     result.map(
-      failure: (failure) => emit(ShowError(failure.error.toString())),
-      success: (success) => emit(ShowTasks(success.value)),
+*     failure: (failure) => emit(ShowError(failure.error.toString())),
+*     success: (success) => emit(ShowTasks(success.value)),
     );
   }
 }
 ```
 
+???
+Najwazniejsze punkty:
+- Cubit jako klasa bazowa
+- ustawianie nowego stanu poprzez `emit()`
+
 ---
 
-## Business logic - riverpod
+## Business logic - Riverpod
 
 ```dart
 *class TasksNotifier extends StateNotifier<TasksState> {
@@ -431,15 +476,19 @@ class TasksCubit extends Cubit<TasksState> {
 ```
 
 ???
+- StateNotifier jako klasa bazowa
+- Type parameter dla state'a
 - przypisanie do `state` zamiast `emit()`
-- inny provider (inaczej zmiany nie będą śledzone przez `watch()`)
-- inicjalizacja w konstruktorze, nigdy w widgecie (jak w przypadku bloca)
-- mozna to obejsc poprzez wywolanie `init` ref.listen, albo `postFrameCallback`,
+- uzycie odpowiedniego providera - StateNotifierProvider (inaczej listenery nie będą powiadamiane o zmianach)
+  - bardzo prosty, częsty błąd przy pracy z Riverpodem
+- inicjalizacja w konstruktorze, nigdy w Widgecie (jak w przypadku bloca)
+  - prowadzi do błędu o próbie zbudowania Widgetu, który nie skończył poprzedniego budowania
+  - mozna to obejsc poprzez wywolanie `init` ref.listen, albo `postFrameCallback`,
 ale jest to malo przyjemne
 
 ---
 
-## bloc - UI
+## Bloc - UI
 
 ```dart
 *class TasksPage extends StatelessWidget {
@@ -463,9 +512,14 @@ ale jest to malo przyjemne
 }
 ```
 
+???
+- wstrzyknięcie Cubita do widget tree - BlocProvider
+- inicjalizacja w `create()`
+- odczyt - BlocBuilder, builder callback z aktualnym stanem
+
 ---
 
-## riverpod - UI
+## Riverpod - UI
 
 ```dart
 *class TasksPage extends ConsumerWidget {
@@ -488,28 +542,30 @@ ale jest to malo przyjemne
 ```
 
 ???
-
+- inna klasa bazowa Widgetu - ConsumerWidget
+  - dostępny równiez odpowiednik ze stanem - ConsumerStatefulWidget
+- metoda `build()` z dodatkowym argumentem
 - Consumer zamiast BlocBuildera
 - tak naprawdę Consumer nie jest zawsze potrzebny i możemy uzywac `ref` z metody build,
-Consumera wprowadzamy w celu ograniczenia rebuild scope
+Consumera wprowadzamy w celu ograniczenia build scope
 
 ---
 
 ## Changes without rebuilds
 
-### bloc
+### Bloc
 ```dart
 BlocListener<TasksCubit, TasksState>(
-  listener: (context, state) {
+* listener: (context, state) {
     // do stuff here based on TasksCubit's state
   },
 ),
 ```
 
-### riverpod
+### Riverpod
 ```dart
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<int>(tasksNotifierProvider, (previousState, nextState) {
+*   ref.listen(tasksNotifierProvider, (previousState, nextState) {
       // do stuff here based on TasksNotifier's state
     });
     
@@ -518,6 +574,8 @@ BlocListener<TasksCubit, TasksState>(
 ```
 
 ???
+- reagowanie na zmiany stanu bez przebudowy widzetów
+- analogiczne konstrukcje, w Riverpodzie mamy jeszcze dostęp do poprzedniego stanu
 - ktoś, kto uzywal providera ten wie, jak cięzkie jest zrobienie takiego listenera
 
 ---
@@ -552,12 +610,13 @@ test('should emit ShowTasks after successful load', () async {
 ???
 - nie ma za bardzo róznicy miedzy Bloc'iem i Riverpodem
 - nie mamy oczywiscie odpowiednika `bloc_test` :D
-- jedyna roznica wynika z tego, ze riverpod odpala metodę `init` w konstruktorze,
+- jedyna roznica wynika z tego, ze Riverpod odpala metodę `init` w konstruktorze,
 wiec testowanie tego jest troche toporne
+- `debugState` zamiast `state` - ten drugi jest oznaczony jako `protected`
 
 ---
 
-## Widget Testing - bloc
+## Widget Testing - Bloc
 
 ```dart
 setUpAll(() async {
@@ -578,12 +637,15 @@ setUp(() {
     ),
   );
 });
-
 ```
+
+???
+- równiez nie ma za bardzo róznic, poza DI
+- Bloc - nadpisanie zaleznosci w GetIt
 
 ---
 
-## Widget Testing - riverpod
+## Widget Testing - Riverpod
 
 ```dart
 setUpAll(() async {
@@ -608,14 +670,21 @@ setUp(() {
     ),
   );
 });
-
 ```
+
+???
+- Riverpod - nadpisanie zaleznosci w ProviderScope
+- pole `overrides`, które przyjmuje tablicę z nadpisanymi providerami
+- nadpisanie odbywa się poprzez metodę `overrideWith`
 
 ---
 
 class: center, middle
 
 # Tidbits time!
+
+???
+- Tak wygląda zestawienie Bloca i Riverpoda. A co Riverpod oferuje oprócz tego?
 
 ---
 
@@ -633,14 +702,19 @@ class: center, middle
 *   state = const AsyncLoading();
 *   state = await AsyncValue.guard(() async {
       final tasks = await _repository.getTasks();
-      return ShowTasks(tasks);
+      return TasksState(tasks);
     });
   }
 }
 ```
 
 ???
-- `AsyncValue` kłóci się ze zwracaniem `Result`
+- obsługa operacji async w BLoCu -> 3 stany (loading, success, error)
+- AsyncValue jest specjalną klasą, która obsługuje te 3 stany; mozna jej uzyc zamiast ręcznej implementacji 3 stanów
+- `AsyncValue` kłóci się ze zwracaniem `Result`, ale `Result` nie jest wtedy potrzebne
+- od strony logiki biznesowej - operowanie na AsyncLoading, AsyncSuccess i AsyncError
+- dodatkowo `AsyncValue.guard` - zastępuje try/catch z przypisaniem Success po udanej operacji async
+i przypisaniem Error wewnątrz `catch`
 
 ---
 
@@ -669,49 +743,62 @@ class: center, middle
   ),
 ```
 
+???
+- po stronie UI - gotowa metoda `map`, obsługująca te 3 stany
+
 ---
 
 ## Modifiers
 ### autoDispose
 ```dart
-*final accountScreenControllerProvider = StateNotifierProvider.autoDispose<
-AccountScreenController, AsyncValue<void>>((ref) {
-  final authRepository = ref.watch(authRepositoryProvider);
-  return AccountScreenController(
-    authRepository: authRepository,
-  );
+*final tasksNotifierProvider = StateNotifierProvider.autoDispose<TasksNotifier, TasksState>((ref) {
+  final tasksRepository = ref.watch(tasksRepositoryProvider);
+  return TasksNotifier(tasksRepository);
 });
 ```
 
 ???
-A common use case is to destroy the state of a provider when it is no-longer used.
-
-There are multiple reasons for doing so, such as:
-- When using Firebase, to close the connection and avoid unnecessary cost.
-- To reset the state when the user leaves a screen and re-enters it.
+- kolejny unikalny element - modyfikatory
+- pierwszy z nich to `autoDispose`
+- obsługa sytuacji, gdy chcemy usunąc providera, gdy nie jest aktywnie uzywany
+  - zamknięcie połączenia z Firebase, zeby nie ponosic kosztów
+  - zresetowanie stanu, gdy user zamknie dany ekran
 
 ---
 
 ## Modifiers
 ### family
 ```dart
-*final productProvider = StreamProvider.family<Product?, String>((ref, id) {
-  final productsRepository = ref.watch(productsRepositoryProvider);
-  return productsRepository.watchProduct(id);
+*final taskDetailsNotifierProvider = StateNotifierProvider.family
+*       <TaskDetailsNotifier, TaskDetailsState, int>((ref, taskId) {
+  final tasksRepository = ref.watch(tasksRepositoryProvider);
+  return TaskDetailsNotifier(taskId);
 });
 
 // then
 Widget build(BuildContext context, WidgetRef ref) {
-* final productValue = ref.watch(productProvider(productId));
+* final state = ref.watch(taskDetailsNotifierProvider(taskId));
 }
 ```
+???
+- kolejny modyfikator - family
+- parametryzacja Providerow - na przykład, gdy mamy dedykowany provider dla ekranu szczegółów taska
+- mozemy wtedy przekazac id taska do utworzenia instancji providera
+- po stronie UI traktujemy provider jako metodę, do której przekazujemy nasz parametr - taskId 
 
-### combined
+---
+## Modifiers
+
+### combining modifiers
 ```dart
-*final productProvider = StreamProvider.autoDispose.family<Product?, String>((ref, id) {
+*final taskDetailsNotifierProvider = StateNotifierProvider.autoDispose.family
+        <TaskDetailsNotifier, TaskDetailsState, int>((ref, taskId) {
   ...
 });
 ```
+
+???
+- modyfikatory mozna łączyc
 
 ---
 
@@ -719,32 +806,45 @@ Widget build(BuildContext context, WidgetRef ref) {
 
 
 ```dart
-class FakeProductsRepository {
-  List<Product> getProductsList();
+class TasksRepository {
+  List<Task> getTasks();
 
-  Stream<List<Product>> watchProductsList();
+  Stream<List<Task>> watchTasks();
 
-  Stream<Product?> watchProduct(String id);
+  Stream<Task?> watchTask(int id);
 }
 
-final productsRepositoryProvider = Provider<FakeProductsRepository>(
-  (ref) => FakeProductsRepository(),
+final tasksRepositoryProvider = Provider<TasksRepository>(
+  (ref) => TasksRepository(),
 );
 
-*final productsListStreamProvider = StreamProvider.autoDispose<List<Product>>((ref) {
-  final productsRepository = ref.watch(productsRepositoryProvider);
-  return productsRepository.watchProductsList();
+*final tasksStreamProvider = StreamProvider.autoDispose<List<Task>>((ref) {
+  final tasksRepository = ref.watch(tasksRepositoryProvider);
+  return tasksRepository.watchTasks();
 });
 
-*final productProvider = StreamProvider.autoDispose.family<Product?, String>((ref, id) {
-  final productsRepository = ref.watch(productsRepositoryProvider);
-  return productsRepository.watchProduct(id);
+*final taskProvider = StreamProvider.autoDispose.family<Task?, int>((ref, taskId) {
+  final tasksRepository = ref.watch(tasksRepositoryProvider);
+  return tasksRepository.watchTask(taskId);
 });
 ```
 
 ???
+- częstą praktyką, jest tworzenie Providerów dla streamów i Future's
+- praca tylko z API Riverpoda, bez Stream/Future API (bardziej wygodne)
+- Riverpod zajmuje się cyklem zycia providera (autoDispose) - brak koniecznosci ręcznego zamykania streamów
 
-- częstą praktyką, jest tworzenie Providerów dla streamów i Future's - do sprawdzenia z kursem
+---
+class: middle, center
+### 🔥🔥🔥 ###
+
+### `Future<T> + FutureProvider = AsyncValue<T>`
+
+### `Stream<T> + StreamProvider = AsyncValue<T>`
+
+???
+- Opakowanie Future/Stream w odpowiedniego Providera -> operowanie na AsyncValue
+- Przy prostych ekranach to w zasadzie eliminuje potrzebę korzystania ze StateNotifiera
 
 ---
 
@@ -775,15 +875,17 @@ class TasksRepository {
 - Do tego mamy duzo boilerplate'a - minimum 3 linijki na kazdą rzecz, którą chcemy
 wrzucic do kontenera z providerami
 - `riverpod_generator` rozwiązuje te kwestie
+- samodzielne dopasowanie typu Providera + adnotacja zamiast boilerplate
 
 ---
 class: center, middle
 ![](assets/wait_what.webp)
 
 ???
-- zgadza się, code generation do narzędzia do zarządzania stanem
+- code generation do narzędzia do zarządzania stanem 🫣
 - rzecz, która budzi największe wątpliwości
-- jeszcze z niej nie korzystałem, więc nie potrafię jej ocenic
+- jeśli praca z SM wymaga generowania kodu, to coś jest nie tak
+- Remy jest świadomy problemu -> metaprogramming
 
 ---
 
@@ -803,12 +905,13 @@ class: center, middle
 - Code generation...
 ]  
 
----
-
-## Final remarks
-
-### Others  
-- [Code with Andrea: Flutter Foundations course](https://codewithandrea.com/courses/flutter-foundations/)
+???
+- dwie główne cechy
+  - wysoka elastycznośc - implementacja dowolnej architektury, wbudowane DI, które łatwo się nadpisuje
+  - umiarkowana dojrzałośc - trochę brakuje dobrych przykładów; docsy dla V2 są WIP;
+- code generation - bardziej dojrzałe narzędzie byłoby prostsze
+- dobry case `pisania od zera` - rozwiązujemy znane problemy, ale wprowadzamy nowe
+- mimo wszystko - warte zachodu!
 
 ---
 
@@ -827,11 +930,20 @@ class: center, middle
 - Enterprises
 ]
 
+???
+- rekomendacja projektowa
+  - dynamiczne projekty, o duzej zmienności
+  - startupy/POCs/inne projekty z dziedziny R&D
+  - w bardziej stabilnych środowiskach moze nie byc az tak wygodny, jak Bloc (ale to tylko teoretyczna obserwacja)
+
 ---
 
 class: center, middle
 
 # Q&A
+
+???
+- to wszystko na dziś, zapraszam do zadawania pytań
 
 ---
 

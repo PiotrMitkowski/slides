@@ -122,6 +122,9 @@ class: center, middle
 
 ## Context
 
+???
+Dlaczego rozmawiamy o róznych narzędziach SM?
+
 ---
 
 ## Context
@@ -147,6 +150,7 @@ Source: [Codemagic blogpost by A. Salvadorini](https://blog.codemagic.io/flutter
 
 ???
 - Walka toczy się od 2018, kiedy wzorzec BLoC został omówiony na Google I/O (Filip Hracek, Matt Sullivan)
+- Wtedy powstała jego implementacja - biblioteka Bloc
 - Potem doszedł Provider, o którym rok później opowiadała ta sama dwójka
 - Wpadło jeszcze kilka innych rozwiązań
 - Flutter Team nie daje jednoznacznej rekomendacji - wielu zwolenników i przeciwników takiego podejścia
@@ -160,7 +164,7 @@ Source: [Codemagic blogpost by A. Salvadorini](https://blog.codemagic.io/flutter
 .center-image[![](assets/standards_2x.png)]
 
 ???
-- walka jednak trwa i community cały czas dązy do wypracowania standardów
+- wracając do walki - community cały czas dązy do wypracowania standardów
 - wiemy, jak to ze standaryzacją bywa -> komiks
 - Riverpod jest efektem dązenia do standardu i stałego ulepszania narzędzi
 w zakresie SM
@@ -202,7 +206,7 @@ class: center, middle
 - autorów obu narzędzi raczej nie trzeba przedstawiac
 - statystyki popularności z GH i Pub.dev przemawiają za Bloc, co w głównej mierze wynika
 z czasu obecności na rynku - Bloc ma bardziej ugruntowaną pozycję
-- oba narzędzia są rozbite na kilka osobnych paczek: core, flutter, hooks, inne (dev tools) 
+- podobny sposób dystrybucji: core, flutter, hooks, inne (dev tools) 
 
 ---
 
@@ -332,14 +336,6 @@ void _setupData() {
 *   ..registerFactory(() => TasksRepository(serviceLocator()));
 }
 
-void _setupFirebase() {
-  return serviceLocator
-    ..registerLazySingleton(() => FirebaseAnalytics.instance)
-    ..registerLazySingleton(
-      () => FirebaseAnalyticsObserver(analytics: serviceLocator())
-    );
-}
-
 *void _setupCubits() {
 * serviceLocator.registerFactory(() => TasksCubit(serviceLocator()));
 *}
@@ -364,14 +360,6 @@ void _setupData() {
       () => DioHelper.createDioInstance(serviceLocator(), serviceLocator())
     );
 *
-}
-
-void _setupFirebase() {
-  return serviceLocator
-    ..registerLazySingleton(() => FirebaseAnalytics.instance)
-    ..registerLazySingleton(
-      () => FirebaseAnalyticsObserver(analytics: serviceLocator())
-    );
 }
 *
 ```
@@ -576,7 +564,6 @@ BlocListener<TasksCubit, TasksState>(
 ???
 - reagowanie na zmiany stanu bez przebudowy widzetów
 - analogiczne konstrukcje, w Riverpodzie mamy jeszcze dostęp do poprzedniego stanu
-- ktoś, kto uzywal providera ten wie, jak cięzkie jest zrobienie takiego listenera
 
 ---
 
